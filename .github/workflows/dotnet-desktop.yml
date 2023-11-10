@@ -1,12 +1,12 @@
-name: Build WinForms Project
+name: Build and Release WinForms Project
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -24,5 +24,23 @@ jobs:
 
     - name: Build
       run: msbuild /p:Configuration=Release pedro.sln
- 
-  
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: git config --global user.email "rishis@live.wsd1.org" && git config --global user.name "Baggette"
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          \a\pedro\pedro\bin\Release\net6.0-windows\pedro.exe
+          # Include other files or directories as needed
+        token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
