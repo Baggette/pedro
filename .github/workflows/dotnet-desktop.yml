@@ -42,6 +42,10 @@ jobs:
           \a\pedro\pedro\bin\Release\net6.0-windows\pedro.exe
           # Include other files or directories as needed
         token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+            Artifacts:
+            - pedro.exe
+            # Include other artifacts as needed
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
