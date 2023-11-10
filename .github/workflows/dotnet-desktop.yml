@@ -44,3 +44,9 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set Git tag
+      run: git tag -a v${{ steps.create_release.outputs.version }} -m "Release version v${{ steps.create_release.outputs.version }}"
+
+    - name: Push Git tag
+      run: git push origin v${{ steps.create_release.outputs.version }}
